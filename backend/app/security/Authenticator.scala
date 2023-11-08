@@ -36,11 +36,9 @@ class UserRequest[A](val user: Option[User], request: Request[A]) extends Wrappe
 // }
 
 @Singleton
-class Authenticator @Inject() (parser: BodyParsers.Default)(implicit ec: ExecutionContext)
+class Authenticator @Inject() (val parser: BodyParsers.Default)(implicit ec: ExecutionContext)
     extends ActionBuilder[UserRequest, AnyContent] {
     val logger = Logger(this.getClass)
-
-    def parser: play.api.mvc.BodyParser[play.api.mvc.AnyContent] = parser
 
     protected def executionContext: scala.concurrent.ExecutionContext = ec
     override def invokeBlock[A](request: Request[A], block: UserRequest[A] => Future[Result]): Future[Result] = {
