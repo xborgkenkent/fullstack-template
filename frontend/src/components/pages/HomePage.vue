@@ -1,63 +1,41 @@
 <template>
 	<HomePage class="main-container">
-		<template #left>
-			<p>left</p>
+		<template #header>
+			<VLogo >
+				<h1>Contact Book</h1>
+				<VButton @click="openModal()"> 
+					Add Contacts
+				</VButton>
+			</VLogo>
 		</template>
-
-		<template #right>
-			<p>right</p>
+		<template #main>
+			<VContacts />
+			<VModalAddContact v-if="modal.openAddModal"/>
 		</template>
 	</HomePage>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import HomePage from "../template/HomePage.vue";
 import { useModal } from "../../stores/page"
+import { useContact } from "../../stores/contacts"
 import VLogo from "../atoms/v-logo.vue";
-import VSpan from "../atoms/v-span.vue";
-import VVerticalNav from "../molecules/v-verticalNav.vue";
-import VModal from "../organisms/v-modal.vue";
-import { usePage } from "../../stores/page";
+import VModalAddContact from "../organisms/v-modalAddContact.vue";
+import VButton from "../atoms/v-button.vue";
+import VContacts from "../organisms/v-contacts.vue";
 
-const page = usePage();
 const modal = useModal()
-const spanValue = ref("Platform Launch");
-const withImg = true;
-const source = "../../public/task.png";
-const links: { to: string; name: string }[] = [
-	{
-		to: "/",
-		name: "Platform Launch",
-	},
-	{
-		to: "/",
-		name: "Marketing Plan",
-	},
-	{
-		to: "/",
-		name: "Roadmap",
-	},
-];
-
+const contact = useContact()
 const openModal = () => {
-	modal.open = true;
-	console.log(modal.open);
+	modal.openAddModal= true;
+	console.log(modal.openAddModal);
 };
 
-const listTag = "ul";
-const listItemTag = "li";
+onMounted(() => {
+	contact.getContacts();
+})
 </script>
 
 <style scoped>
-.addButton {
-	background-color: var(--violet);
-	padding: 0.5rem;
-	border-radius: 20px;
-	cursor: default;
-}
-
-.header-title {
-	font-weight: bolder;
-}
 </style>

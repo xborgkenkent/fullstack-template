@@ -7,9 +7,8 @@ export const usePage = defineStore("page", () => {
   return { page };
 });
 
-
 export const useModal = defineStore("modal", () => {
-  const open = ref(false)
-
-  return { open }
-})
+  const openAddModal = ref(false);
+  const openEditModal = ref(false);
+  return { openAddModal, openEditModal };
+});

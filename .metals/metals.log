@@ -1,0 +1,12 @@
+2023.11.08 15:39:27 INFO  Started: Metals version 1.1.0 in folders '/Users/krobuncal/Documents/typescript-proj/fullstack/Contact Book' for client Visual Studio Code 1.80.2.
+2023.11.08 15:39:29 INFO  Attempting to connect to the build server...
+2023.11.08 15:39:29 INFO  Bloop uses /Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home defined at /Users/krobuncal/.bloop/bloop.json
+2023.11.08 15:39:30 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/krobuncal/Documents/typescript-proj/fullstack/Contact Book/.metals/bsp.trace.json or /Users/krobuncal/Library/Caches/org.scalameta.metals/bsp.trace.json
+2023.11.08 15:39:30 INFO  time: Connected to build server in 1.19s
+2023.11.08 15:39:30 INFO  Connected to Build server: Bloop v1.5.8
+2023.11.08 15:39:30 INFO  time: Imported build in 0.21s
+2023.11.08 15:39:32 INFO  Required scalafmt dialect rewrite to 'scala3'. Directories:
+- backend/target/scala-3.3.1/routes/main
+- backend/test
+- backend/app
+2023.11.08 15:39:46 INFO  time: indexed workspace in 15s

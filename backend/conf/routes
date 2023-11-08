@@ -1,6 +1,8 @@
-GET    /              controllers.HomeController.index()
-GET    /employees     controllers.HomeController.getAllEmployees()
+GET /              controllers.HomeController.index()
+GET /tables         controllers.HomeController.tables()
+GET /contacts        controllers.ContactController.getAllContacts()
+GET /contacts/:id   controllers.ContactController.deleteContact(id: String)
 
-POST   /employee-add        controllers.HomeController.addEmployee()
-POST   /employee-login      controllers.HomeController.login()
-POST   /employee-logout      controllers.HomeController.logout()
+
+POST /contacts    controllers.ContactController.addContact()
+POST /contacts/:id    controllers.ContactController.updateContact(id: String)

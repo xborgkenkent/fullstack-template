@@ -1,10 +1,10 @@
 <template>
-	<div class="left">
-		<slot name="left" />
-	</div>
-	<div class="right">
-		<slot name="right" />
-	</div>
+	<header class="header">
+		<slot name="header"/>
+	</header>
+	<main>
+		<slot name="main"/>
+	</main>
 </template>
 
 <style scoped></style>
