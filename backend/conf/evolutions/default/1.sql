@@ -1,12 +1,17 @@
--- Roles schema
+-- -- Roles schema
 
--- !Ups
+-- -- !Ups
 
-CREATE TABLE roles(
-   role_id serial PRIMARY KEY,
-   role_name VARCHAR (255) UNIQUE NOT NULL
-);
+-- CREATE TABLE "POSTS"(
+--    "ID" UUID PRIMARY KEY,
+--    "MESSAGE" VARCHAR(255) NOT NULL,
+--    "PASSWORD" VARCHAR(255) NOT NULL,
+--    "PHOTO" BYTEA NOT NULL,
+--    "EXTENSION" VARCHAR(255) NOT NULL,
+--    "CREATED_AT" TIMESTAMP NOT NULL
 
--- !Downs
+-- );
 
-DROP TABLE roles;;
+-- -- !Downs
+
+-- DROP TABLE "POSTS";

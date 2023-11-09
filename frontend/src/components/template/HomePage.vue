@@ -1,9 +1,13 @@
 <template>
-	<div class="left">
-		<slot name="left" />
+	<div>
+		<slot name="header" />
 	</div>
-	<div class="right">
-		<slot name="right" />
+
+	<div>
+		<slot name="main" />
+	</div>
+	<div>
+		<slot name="footer" />
 	</div>
 </template>
 

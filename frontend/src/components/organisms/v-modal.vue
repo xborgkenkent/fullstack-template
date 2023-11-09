@@ -1,26 +1,27 @@
 <template>
 	<Teleport to="body">
 		<div v-if="(modal.open = true)" class="modal">
-			<div class="addForm">
+			<form class="addForm" method="post" @submit.prevent="upload()" enctype="multipart/form-data">
 				<v-input
 					class="input"
 					:inputType="inputType"
 					:placeholderValue="placeHolderTitle"
-					v-model="title"
+					@change="post.form.message = $event.target.value"
 				/>
 				<v-input
 					class="input"
 					:inputType="inputType"
-					:placeholderValue="placeHolderDesc"
-					v-model="description"
+					:placeholderValue="placeHolderTitle"
+					@change="post.form.password = $event.target.value"
 				/>
+				<v-input type="file" multiple name="image" @change="post.form.image = $event.target.files[0]"/>
 				<!-- <v-select
 					v-model="kanban.status"
 					:items="kanban.statuses"
 					class="select"
 				/> -->
-				<v-button class="submitButton">Add Task</v-button>
-			</div>
+				<v-button class="submitButton" type="submit">Post</v-button>
+			</form>
 			<div class="close">
 				<v-button class="closeButton" @click="modal.open = false">x</v-button>
 			</div>
@@ -34,16 +35,49 @@ import { usePage } from "../../stores/page";
 import VInput from "../atoms/v-input.vue";
 import VSelect from "../atoms/v-select.vue";
 import { useModal } from "../../stores/page";
+import { usePost } from "../../stores/page";
+import VButton from "../atoms/v-button.vue";
 
 const page = usePage();
-const modal = useModal()
+const modal = useModal();
+const post = usePost();
 const inputType = "text";
-const placeHolderTitle = "Enter task name";
-const placeHolderDesc = "Enter description";
+const placeHolderTitle = "Enter message...";
 
-const description = ref("");
-const title = ref("");
+const handleFileChange = (event) => {
+      post.form.image = event.target.files[0];
+}
 
+const upload = () => {
+	console.log("ASdassaas")
+    const url = "http://localhost:9000/";
+    const formData = new FormData()
+    formData.append("message", post.form.message)
+	formData.append("password", post.form.password)
+    formData.append("image", post.form.image)
+    console.log(post.form.image)
+    fetch(url, {
+        method: "POST",
+        body: formData
+    })
+        .then((response) => {
+            if(response.ok) {
+				console.log(response)
+                return response.ok
+            }else{
+                console.log("response status", response.status)
+                console.log("response status", response.statusText)
+                throw new Error("Network response was not ok")
+            }
+    })
+        .then((data) => {
+            //photo.fetchPhoto()
+            console.log("success", data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+}
 </script>
 
 <style scoped>
@@ -55,7 +89,7 @@ const title = ref("");
 	top: 40%;
 	left: 40%;
 	width: 30vw;
-	background-color: var(--jaguar);
+	background-color: var(--white);
 	padding: 3rem;
 	border-radius: 10px;
 }

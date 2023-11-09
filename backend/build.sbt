@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   ws,
   "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % Test,
   "org.playframework" %% "play-slick" % "6.0.0-M2",
-  "org.playframework" %% "play-slick-evolutions" % "6.0.0-M2",
+  // "org.playframework" %% "play-slick-evolutions" % "6.0.0-M2",
   "com.h2database" % "h2" % "1.4.200",
   "ch.qos.logback" % "logback-classic" % "0.9.28" % "test",
   "org.postgresql" % "postgresql" % "42.5.1",
