@@ -6,3 +6,4 @@ GET /image/:id   controllers.PostController.getImage(id)
 
 POST /           controllers.PostController.addPost()
 POST /register   controllers.UserController.register()
+POST    /comment/:id    controllers.CommentController.addComment(id)

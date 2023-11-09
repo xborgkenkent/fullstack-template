@@ -14,7 +14,7 @@
 					:placeholderValue="placeHolderTitle"
 					@change="post.form.password = $event.target.value"
 				/>
-				<v-input type="file" multiple name="image" @change="post.form.image = $event.target.files[0]"/>
+				<v-input type="file" multiple name="image" @change="handleFileChange"/>
 				<!-- <v-select
 					v-model="kanban.status"
 					:items="kanban.statuses"
@@ -45,7 +45,7 @@ const inputType = "text";
 const placeHolderTitle = "Enter message...";
 
 const handleFileChange = (event) => {
-      post.form.image = event.target.files[0];
+      post.form.image = event.target.files;
 }
 
 const upload = () => {
@@ -54,7 +54,9 @@ const upload = () => {
     const formData = new FormData()
     formData.append("message", post.form.message)
 	formData.append("password", post.form.password)
-    formData.append("image", post.form.image)
+    for (let i = 0; i < post.form.image.length; i++) {
+    	formData.append("images[]", post.form.image[i]);
+  	}
     console.log(post.form.image)
     fetch(url, {
         method: "POST",

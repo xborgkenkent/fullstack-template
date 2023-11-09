@@ -10,11 +10,13 @@ import models.repo.ImageRepo
 import models.repo.PostRepo
 import play.api.mvc.MultipartFormData
 import scala.concurrent.ExecutionContext
+import models.repo.CommentRepo
 
 @Singleton
 class PostImageService @Inject() (
   val postRepo: PostRepo,
   val imageRepo: ImageRepo,
+  val commentRepo: CommentRepo,
   implicit val ec: ExecutionContext,
 ) {
 
@@ -31,6 +33,7 @@ class PostImageService @Inject() (
     for {
       posts <- postRepo.getAllPost()
       images <- imageRepo.getAllImage()
-    } yield (PostImage(posts, images))
+      comments <- commentRepo.getAllComments()
+    } yield (PostImage(posts, images, comments))
   }
 }

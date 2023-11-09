@@ -18,6 +18,7 @@ import play.api.mvc._
 import scala.concurrent._
 import security.Authenticator
 import security.UserRequest
+import models.domain.Comment
 
 @Singleton
 class PostController @Inject() (
@@ -35,6 +36,8 @@ class PostController @Inject() (
   implicit val postWrites: Writes[Post] = Json.writes[Post]
 
   implicit val imageWrites: Writes[Image] = Json.writes[Image]
+
+  implicit val commentWrites: Writes[Comment] = Json.writes[Comment]
 
   val postForm = Form(
     tuple("message" -> nonEmptyText, "password" -> text)

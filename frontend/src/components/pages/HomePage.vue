@@ -28,6 +28,9 @@ const openModal = () => {
 	console.log(modal.open);
 };
 
+onMounted(() => {
+	post.getPosts()
+})
 </script>
 
 <style scoped>

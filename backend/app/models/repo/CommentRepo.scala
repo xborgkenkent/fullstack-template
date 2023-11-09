@@ -47,4 +47,8 @@ final class CommentRepo @Inject() (
   val commentTable = TableQuery[CommentTable]
 
   def createCommentTable() = db.run(commentTable.schema.createIfNotExists)
+
+  def insert(comment: Comment) = db.run(commentTable returning commentTable.map(_.id) += comment)
+
+  def getAllComments() = db.run(commentTable.result)
 }
