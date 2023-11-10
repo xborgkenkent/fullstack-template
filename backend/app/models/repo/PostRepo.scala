@@ -44,4 +44,6 @@ final class PostRepo @Inject() (
     db.run(postTable returning postTable.map(_.id) += post)
 
   def getAllPost() = db.run(postTable.result)
+
+  def deletePost(id: UUID) = db.run(postTable.filter(_.id === id).delete)
 }

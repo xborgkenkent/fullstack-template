@@ -40,4 +40,15 @@ class HomeController @Inject() (
       _ <- imageRepo.createImageTable()
     } yield (Ok)
   }
+
+  def getSession() = authenticator.async { implicit request =>
+    request.session.get("userId") match {
+      case Some(userId) => Future.successful(Ok)
+      case None         => Future.successful(Unauthorized)
+    }
+  }
+
+  def setSession = Action { implicit request: Request[AnyContent] =>
+    Redirect("/").withSession("userId" -> UUID.randomUUID().toString)
+  }
 }

@@ -48,7 +48,14 @@ final class CommentRepo @Inject() (
 
   def createCommentTable() = db.run(commentTable.schema.createIfNotExists)
 
-  def insert(comment: Comment) = db.run(commentTable returning commentTable.map(_.id) += comment)
+  def insert(comment: Comment) =
+    db.run(commentTable returning commentTable.map(_.id) += comment)
 
   def getAllComments() = db.run(commentTable.result)
+
+  def getCommentsByPostId(postId: UUID) =
+    db.run(commentTable.filter(_.postId === postId).result)
+
+  def deleteComment(postId: UUID) =
+    db.run(commentTable.filter(_.postId === postId).delete)
 }

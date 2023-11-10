@@ -11,6 +11,7 @@ case class Post(
   createdAt: Date,
 )
 
+given Writes[Post] = Json.writes[Post]
 object Post {
   def unapply(
     post: Post

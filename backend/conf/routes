@@ -1,9 +1,16 @@
 GET /              controllers.HomeController.index()
 GET /tables        controllers.HomeController.tables()
 GET /login          controllers.UserController.login()
-GET /posts          controllers.PostController.getAll()
+# GET /posts          controllers.PostController.getAll()
 GET /image/:id   controllers.PostController.getImage(id)
+GET /posts/:id      controllers.PostController.deletePost(id)
+
+GET /session        controllers.HomeController.getSession()
+GET /socket         controllers.PostController.socket()
+
+POST /session    controllers.HomeController.setSession()
+
 
 POST /           controllers.PostController.addPost()
 POST /register   controllers.UserController.register()
-POST    /comment/:id    controllers.CommentController.addComment(id)
+POST /comment/:id    controllers.CommentController.addComment(id)

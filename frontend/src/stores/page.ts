@@ -23,8 +23,8 @@ export const usePost = defineStore("posts", () => {
   ]);
 
   const formComment = ref({
-    message: ''
-  })
+    message: "",
+  });
 
   const post = {
     id: "",
@@ -39,21 +39,21 @@ export const usePost = defineStore("posts", () => {
     image: "",
     extension: "",
   };
-  
+
   const comment = ref({
-    id: "", 
-    postId: "", 
-    message: "", 
-    createdAt: ""
-  })
+    id: "",
+    postId: "",
+    message: "",
+    createdAt: "",
+  });
 
   const posts = ref({
-    p: post,
-    i: image,
-    c: comment
+    p: Array<typeof post>(),
+    i: Array<typeof image>(),
+    c: Array<typeof comment>(),
   });
   const getPosts = () => {
-    fetch("http://localhost:9000/posts")
+    fetch("http://10.11.0.230:9000/posts")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -69,20 +69,30 @@ export const usePost = defineStore("posts", () => {
   };
 
   const addComment = (id: string, message: string) => {
-
-    const formData = new FormData()
-    formData.append('comment', message)
-    fetch(`http://localhost:9000/comment/${id}`, {
+    const formData = new FormData();
+    formData.append("comment", message);
+    fetch(`http://10.11.0.230:9000/comment/${id}`, {
       method: "POST",
-      body: formData
-    })
-    .then((response)=> {
-      if(response.ok) {
-        return response.json()
-      }else{
-        throw new Error("network error")
+      body: formData,
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("network error");
       }
-    })
-  }
-  return { form, getPosts, posts, addComment, formComment };
+    });
+  };
+
+  const deletePost = (id: string) => {
+    fetch(`http://10.11.0.230:9000/posts/${id}`, {
+      method: "GET",
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("network error");
+      }
+    });
+  };
+  return { form, getPosts, posts, addComment, formComment, deletePost };
 });

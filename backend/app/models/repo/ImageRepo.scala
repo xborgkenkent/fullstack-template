@@ -64,6 +64,16 @@ final class ImageRepo @Inject() (
     insert(image)
   }
 
-  def getImageById(id: UUID) =
+  def getImageById(id: UUID) = {
     db.run(imageTable.filter(_.id === id).result.headOption)
+  }
+
+  def getImageByPostId(postId: UUID) = {
+    db.run(imageTable.filter(_.postId === postId).result)
+  }
+
+  def deleteImage(postId: UUID) = {
+    db.run(imageTable.filter(_.postId === postId).delete)
+  }
+
 }

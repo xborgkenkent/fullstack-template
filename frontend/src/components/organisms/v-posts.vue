@@ -1,19 +1,24 @@
 <template>
    
     <VList :tag="listTag">
-        <VListItem :tag="listTagItem" v-for="p in post.posts.post">
+        <VListItem :tag="listTagItem" v-for="p in post.posts.p">
             <div class="posts">
+                <div class="delete">
+                    <VButton @click="post.deletePost(p.id)">
+                        x
+                    </VButton>
+                </div>
                 <p>{{p.message}}</p>
                 <VList :tag="listTag">
                     <div class="images">
-                        <VListItem :tag="listTagItem" v-for="image in post.posts.image">
+                        <VListItem :tag="listTagItem" v-for="image in post.posts.i">
                             <img v-if="image.postId===p.id" :src="imageData(image.image, image.extension)" class="image">
                         </VListItem>
                     </div>
                 </VList>
                 <div class="comments">
                     <VList :tag="listTag">
-                        <VListItem :tag="listTagItem" v-for="comment in post.posts.comment">
+                        <VListItem :tag="listTagItem" v-for="comment in post.posts.c">
                             <p v-if="comment.postId===p.id">{{comment.message}}</p>
                         </VListItem>
                     </VList>
@@ -81,6 +86,6 @@ const submitComment = () => {
     }
 
     .images img {
-        width: 40%;
+        width: 40vw;
     }
 </style>
