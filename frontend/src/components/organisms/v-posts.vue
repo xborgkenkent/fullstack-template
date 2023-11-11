@@ -1,7 +1,7 @@
 <template>
    
     <VList :tag="listTag">
-        <VListItem :tag="listTagItem" v-for="p in post.posts.p">
+        <VListItem :tag="listTagItem" v-for="p in post.posts">
             <div class="posts">
                 <div class="delete">
                     <VButton @click="post.deletePost(p.id)">
@@ -11,14 +11,14 @@
                 <p>{{p.message}}</p>
                 <VList :tag="listTag">
                     <div class="images">
-                        <VListItem :tag="listTagItem" v-for="image in post.posts.i">
+                        <VListItem :tag="listTagItem" v-for="image in post.images">
                             <img v-if="image.postId===p.id" :src="imageData(image.image, image.extension)" class="image">
                         </VListItem>
                     </div>
                 </VList>
                 <div class="comments">
                     <VList :tag="listTag">
-                        <VListItem :tag="listTagItem" v-for="comment in post.posts.c">
+                        <VListItem :tag="listTagItem" v-for="comment in post.comments">
                             <p v-if="comment.postId===p.id">{{comment.message}}</p>
                         </VListItem>
                     </VList>

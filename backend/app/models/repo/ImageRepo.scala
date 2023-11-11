@@ -48,7 +48,7 @@ final class ImageRepo @Inject() (
 
   def createImageTable() = db.run(imageTable.schema.createIfNotExists)
 
-  def insert(image: Image) = db.run(imageTable += image)
+  def insert(image: Image) = db.run(imageTable returning imageTable.map(_.id) += image)
 
   def getAllImage() = db.run(imageTable.result)
 

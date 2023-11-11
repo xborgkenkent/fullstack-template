@@ -50,7 +50,7 @@ const handleFileChange = (event) => {
 
 const upload = () => {
 	console.log("ASdassaas")
-    const url = "http://10.11.0.230:9000/";
+    const url = "http://localhost:9000/";
     const formData = new FormData()
     formData.append("message", post.form.message)
 	formData.append("password", post.form.password ?? "")

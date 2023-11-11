@@ -26,34 +26,30 @@ export const usePost = defineStore("posts", () => {
     message: "",
   });
 
-  const post = {
+  const posts = ref([{
     id: "",
     message: "",
     password: "",
     createdAt: "",
-  };
+  }]);
 
-  const image = {
+  const images = ref([{
     id: "",
     postId: "",
     image: "",
     extension: "",
-  };
+  }]);
 
-  const comment = ref({
+  const comments = ref([{
     id: "",
     postId: "",
     message: "",
     createdAt: "",
-  });
+  }]);
 
-  const posts = ref({
-    p: Array<typeof post>(),
-    i: Array<typeof image>(),
-    c: Array<typeof comment>(),
-  });
+
   const getPosts = () => {
-    fetch("http://10.11.0.230:9000/posts")
+    fetch("http://localhost:9000/posts")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -63,7 +59,7 @@ export const usePost = defineStore("posts", () => {
       })
       .then((data) => {
         console.log(data);
-        posts.value = data;
+     
         //posts.value = data
       });
   };
@@ -71,12 +67,12 @@ export const usePost = defineStore("posts", () => {
   const addComment = (id: string, message: string) => {
     const formData = new FormData();
     formData.append("comment", message);
-    fetch(`http://10.11.0.230:9000/comment/${id}`, {
+    fetch(`http://localhost:9000/comment/${id}`, {
       method: "POST",
       body: formData,
     }).then((response) => {
       if (response.ok) {
-        return response.json();
+        return response.ok;
       } else {
         throw new Error("network error");
       }
@@ -84,15 +80,15 @@ export const usePost = defineStore("posts", () => {
   };
 
   const deletePost = (id: string) => {
-    fetch(`http://10.11.0.230:9000/posts/${id}`, {
+    fetch(`http://localhost:9000/posts/${id}`, {
       method: "GET",
     }).then((response) => {
       if (response.ok) {
-        return response.json();
+        return response.ok;
       } else {
         throw new Error("network error");
       }
     });
   };
-  return { form, getPosts, posts, addComment, formComment, deletePost };
+  return { form, getPosts, posts, images, comments, addComment, formComment, deletePost };
 });

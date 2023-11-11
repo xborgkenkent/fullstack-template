@@ -30,24 +30,25 @@ const openModal = () => {
 	console.log(modal.open);
 };
 
-onMounted(() => {
-	//post.getPosts()
-})
 
-const socket = new WebSocket("ws://10.11.0.230:9000/socket");
+
+const socket = new WebSocket("ws://localhost:9000/socket");
 
 socket.onopen = () => {
 	console.log("connected");
 }
 
 socket.onmessage = (event) => {
-	const data = JSON.parse(event.data)
-
-	post.posts.p.push(data.post)
-	post.posts.i.push(data.image)
-	post.posts.c.push(data.comment)
+	const data = JSON.parse((event.data))
 	
-	console.log(post.posts);
+	post.posts = [...data.post, ...post.posts]
+	post.images = [...data.image, ...post.images]
+	post.comment = [...data.comment, ...post.comments]
+	console.log(post.posts)
+
+
+
+	//console.log(JSON.parse(JSON.stringify(post.posts.post)));
 }
 
 socket.onclose = () => {

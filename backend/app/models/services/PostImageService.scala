@@ -14,6 +14,7 @@ import models.repo.PostRepo
 import play.api.libs.json.Json
 import play.api.mvc.MultipartFormData
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
 @Singleton
 class PostImageService @Inject() (
@@ -28,16 +29,19 @@ class PostImageService @Inject() (
     images: Array[MultipartFormData.FilePart[play.api.libs.Files.TemporaryFile]],
   ) = {
     (postRepo.insertPost(post)).map { postId =>
-      images.map { image => imageRepo.tempFile(postId, image) }
-
+      images.map { image => {imageRepo.tempFile(postId, image).map(_ => ()) 
+      
+        Thread.sleep(1000)
       val postimageFuture = for {
         img <- imageRepo.getImageByPostId(postId)
         com <- commentRepo.getCommentsByPostId(postId)
       } yield (PostImage(Seq(post), img, com))
 
-      postimageFuture.map { postimage =>
-        UserActor.sockets.foreach(socket => socket ! Json.toJson(postimage))
-      }
+      imageRepo.getImageByPostId(postId).flatMap(img => commentRepo.getCommentsByPostId(postId).flatMap(comment =>{
+        Future(UserActor.sockets.foreach(socket => socket ! Json.toJson(PostImage(Seq(post), img, comment))))
+      })
+      )
+      }}
     }
   }
 
