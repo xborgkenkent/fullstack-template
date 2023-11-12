@@ -1,1 +1,10 @@
 GET    /              controllers.HomeController.index()
+GET    /dashboard       controllers.UserController.dashboard()
+
+GET    /session         controllers.SessionController.session()
+
+
+POST    /register     controllers.UserController.register()
+POST    /login        controllers.UserController.login()
+
+

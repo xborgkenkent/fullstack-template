@@ -1,5 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,17 +6,37 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../components/pages/HomePage.vue')
+      component: () => import('../components/pages/HomePage.vue'),
+      meta: { requiresAuth: true }
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue')
-    // }
-  ]
-})
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../components/pages/RegisterPage.vue'),
+      meta: { requiresAuth: false }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../components/pages/LoginPage.vue'),
+      meta: { requiresAuth: false }
+    },
+  ],
+});
 
-export default router
+router.beforeEach(async (to, from, next) => {
+  try {
+    const res = await fetch("http://localhost:9000/session");
+
+
+    if (to.meta.requiresAuth && res.status !== 200) {
+      next('/login');
+    } else {
+      next(); 
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export default router;

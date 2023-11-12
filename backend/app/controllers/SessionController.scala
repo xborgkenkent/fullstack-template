@@ -14,17 +14,16 @@ import security.Authenticator
 import security.UserRequest
 
 @Singleton
-class HomeController @Inject()(
+class SessionController @Inject()(
   authenticator: Authenticator,
   val userRepo: UserRepo,
   val cc: ControllerComponents
 )(implicit val ec: ExecutionContext) extends AbstractController(cc) {
 
-  
-
-  def index() = Action.async { implicit request: Request[AnyContent] =>
-    for{
-      _ <- userRepo.createUserTable()
-    }yield(Ok)
-  }
+    def session() = authenticator.async { implicit request =>
+        request.session.get("userId") match {
+            case Some(userId) => Future(Ok)
+            case None => Future(Unauthorized)
+        }
+    }
 }
