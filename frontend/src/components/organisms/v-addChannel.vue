@@ -1,6 +1,6 @@
 <template>
 	<Teleport to="body">
-		<div v-if="(modal.open = true)" class="modal">
+		<div v-if="(modal.openChannel = true)" class="modal">
 			<div class="addForm">
 				<v-input
 					class="input"
@@ -13,10 +13,10 @@
 					:items="kanban.statuses"
 					class="select"
 				/> -->
-				<v-button class="submitButton">Add Task</v-button>
+				<v-button class="submitButton" @click="addChannel()">Add Task</v-button>
 			</div>
 			<div class="close">
-				<v-button class="closeButton" @click="modal.open = false">x</v-button>
+				<v-button class="closeButton" @click="modal.openChannel = false">x</v-button>
 			</div>
 		</div>
 	</Teleport>
@@ -34,6 +34,23 @@ const modal = useModal()
 const inputType = "text";
 
 const channelname = ref('')
+
+const addChannel = () => {
+	const formData = new FormData()
+	formData.append("name", channelname.value)
+	fetch("http://localhost:9000/group-channel", {
+		method: "POST",
+		credentials: 'include',
+		body: formData
+	})
+	.then((response) => {
+		if(response.ok) {
+			return response.ok
+		}else{
+			throw new Error("network error response")
+		}
+	})
+}
 </script>
 
 <style scoped>

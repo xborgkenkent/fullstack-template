@@ -1,10 +1,19 @@
-GET    /              controllers.HomeController.index()
-GET    /dashboard       controllers.UserController.dashboard()
+GET /              controllers.HomeController.index()
+GET /dashboard       controllers.UserController.dashboard()
 
-GET    /session         controllers.SessionController.session()
+GET /session         controllers.SessionController.session()
+GET /logout          controllers.UserController.logout()
 
 
-POST    /register     controllers.UserController.register()
-POST    /login        controllers.UserController.login()
+POST /register     controllers.UserController.register()
+POST /login        controllers.UserController.login()
+
+POST /group-channel    controllers.PublicChannelController.addChannel()
+GET /group-channel     controllers.PublicChannelController.getAllChannel()
+
+POST /chat              controllers.MessagesController.addMessage()
+
+GET /group-channel/:id  controllers.PublicChannelController.getChannelInfo(id)
+GET /chat/:id/:group    controllers.MessagesController.getMessages(id: String, group: Boolean)
 
 

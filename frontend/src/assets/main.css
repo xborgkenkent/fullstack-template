@@ -18,7 +18,7 @@
 	display: flex;
 }
 body {
-	color: var(--white);
+	color: var(--black);
 	width: 100vw;
 }
 .left h2 {
