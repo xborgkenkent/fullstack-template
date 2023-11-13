@@ -1,12 +1,33 @@
 <template>
-    <VInput type="text" placeholder="Enter username..." v-model="fname"/>
-    <VInput type="text" placeholder="Enter password..." v-model="fname"/>
+    <VInput type="text" placeholder="Enter first name" v-model="username"/>
+    <VInput type="text" placeholder="Enter first name" v-model="password"/>
+    <VButton type="submit" @click="login()">Login</VButton>
 </template>
 
 <script setup lang="ts">
 import {ref} from "vue";
 import VInput from "../atoms/v-input.vue"
+import VButton from "../atoms/v-button.vue";
+import router from "@/router";
 
+const username = ref('')
+const password = ref('')
 
-const fname = ref('firsntma')
+const login = () => {
+
+    const formData = new FormData()
+    formData.append("username", username.value)
+    formData.append("password", password.value)
+    fetch("http://localhost:9000/login", {
+        method: "POST",
+        body: formData,
+        credentials: 'include'
+    })
+    .then((response) => {
+        if(response.ok) {
+            router.push("/")
+        }
+    })
+
+}
 </script>

@@ -1,16 +1,17 @@
 package models.repo
 
-import javax.inject._
-import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
-import slick.jdbc.JdbcProfile
-import scala.concurrent.ExecutionContext
 import java.util.UUID
+import javax.inject._
 import models.domain.User
+import play.api.db.slick.DatabaseConfigProvider
+import play.api.db.slick.HasDatabaseConfigProvider
+import scala.concurrent.ExecutionContext
+import slick.jdbc.JdbcProfile
 
 @Singleton
-final class UserRepo @Inject()(
+final class UserRepo @Inject() (
   protected val dbConfigProvider: DatabaseConfigProvider,
-  implicit val ec: ExecutionContext
+  implicit val ec: ExecutionContext,
 ) extends HasDatabaseConfigProvider[JdbcProfile] {
 
   import slick.jdbc.PostgresProfile.api._
@@ -27,14 +28,14 @@ final class UserRepo @Inject()(
 
   protected class UserTable(tag: Tag) extends Table[User](tag, "USERS") {
     def id = column[UUID]("ID", O.PrimaryKey)
-    def firstName = column[String]("FIRST_NAME")
-    def middleName = column[String]("MIDDLE_NAME")
-    def lastName = column[String]("LAST_NAME")
+    def firstname = column[String]("FIRST_NAME")
+    def middlename = column[String]("MIDDLE_NAME")
+    def lastname = column[String]("LAST_NAME")
     def username = column[String]("USERNAME")
     def password = column[String]("PASSWORD")
-    def role = column[String]("ROLE")
 
-    def * = (id, firstName, middleName, lastName, username, password, role).mapTo[User]
+    def * =
+      (id, firstname, middlename, lastname, username, password).mapTo[User]
   }
 
   val usersTable = TableQuery[UserTable]
@@ -43,8 +44,14 @@ final class UserRepo @Inject()(
 
   def getAllUsers() = db.run(usersTable.result)
 
-  def addUser(user: User) = db.run(usersTable returning usersTable.map(_.id) += user)
+  def addUser(user: User) =
+    db.run(usersTable returning usersTable.map(_.id) += user)
 
-  def findUserByUsernameAndPassword(username: String, password: String) = db.run(usersTable.filter(u => u.username === username && u.password === password).result.headOption)
+  def findUserByUsernameAndPassword(username: String, password: String) =
+    db.run(
+      usersTable
+        .filter(u => u.username === username && u.password === password)
+        .result
+        .headOption
+    )
 }
-
